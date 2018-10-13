@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,10 +20,10 @@ import java.util.List;
  * @author du_imba
  */
 @RestController
-@RequestMapping("/")
-public class TinyIdContronller {
+@RequestMapping("/id/")
+public class IdContronller {
 
-    private static final Logger logger = LoggerFactory.getLogger(TinyIdContronller.class);
+    private static final Logger logger = LoggerFactory.getLogger(IdContronller.class);
     @Autowired
     private IdGeneratorFactoryServer idGeneratorFactoryServer;
     @Autowired
@@ -43,8 +42,6 @@ public class TinyIdContronller {
             response.setMessage(ErrorCode.TOKEN_ERR.getMessage());
             return response;
         }
-        StopWatch stopWatch = new StopWatch();
-        stopWatch.start();
         try {
             IdGenerator idGenerator = idGeneratorFactoryServer.getIdGenerator(bizType);
             List<Long> ids = idGenerator.nextId(newBatchSize);
@@ -54,8 +51,6 @@ public class TinyIdContronller {
             response.setMessage(e.getMessage());
             logger.error("nextId error", e);
         }
-        stopWatch.stop();
-        logger.info("nextId bizType:{}, batchSize:{}, token:{}, cost:{}", bizType, batchSize, token, stopWatch.getTotalTimeMillis());
         return response;
     }
 
@@ -76,8 +71,6 @@ public class TinyIdContronller {
         if (!tinyIdTokenService.canVisit(bizType, token)) {
             return "";
         }
-        StopWatch stopWatch = new StopWatch();
-        stopWatch.start();
         String response = "";
         try {
             IdGenerator idGenerator = idGeneratorFactoryServer.getIdGenerator(bizType);
@@ -95,8 +88,6 @@ public class TinyIdContronller {
         } catch (Exception e) {
             logger.error("nextIdSimple error", e);
         }
-        stopWatch.stop();
-        logger.info("nextIdSimple bizType:{}, batchSize:{}, token:{}, cost:{}", bizType, batchSize, token, stopWatch.getTotalTimeMillis());
         return response;
     }
 
@@ -108,19 +99,14 @@ public class TinyIdContronller {
             response.setMessage(ErrorCode.TOKEN_ERR.getMessage());
             return response;
         }
-        StopWatch stopWatch = new StopWatch();
-        stopWatch.start();
-        SegmentId segmentId = null;
         try {
-            segmentId = segmentIdService.getNextSegmentId(bizType);
+            SegmentId segmentId = segmentIdService.getNextSegmentId(bizType);
             response.setData(segmentId);
         } catch (Exception e) {
             response.setCode(ErrorCode.SYS_ERR.getCode());
             response.setMessage(e.getMessage());
             logger.error("nextSegmentId error", e);
         }
-        stopWatch.stop();
-        logger.info("nextSegmentId bizType:{}, token:{}, response:{}, cost:{}", bizType, token, segmentId, stopWatch.getTotalTimeMillis());
         return response;
     }
 
@@ -129,8 +115,6 @@ public class TinyIdContronller {
         if (!tinyIdTokenService.canVisit(bizType, token)) {
             return "";
         }
-        StopWatch stopWatch = new StopWatch();
-        stopWatch.start();
         String response = "";
         try {
             SegmentId segmentId = segmentIdService.getNextSegmentId(bizType);
@@ -139,8 +123,6 @@ public class TinyIdContronller {
         } catch (Exception e) {
             logger.error("nextSegmentIdSimple error", e);
         }
-        stopWatch.stop();
-        logger.info("nextSegmentIdSimple bizType:{}, token:{}, response:{}, cost:{}", bizType, token, response, stopWatch.getTotalTimeMillis());
         return response;
     }
 

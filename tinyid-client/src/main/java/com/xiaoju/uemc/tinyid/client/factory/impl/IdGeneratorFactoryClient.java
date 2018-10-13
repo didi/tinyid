@@ -27,7 +27,7 @@ public class IdGeneratorFactoryClient extends AbstractIdGeneratorFactory {
 
     private static final int DEFAULT_TIME_OUT = 5000;
 
-    private static String serverUrl = "http://{0}/tinyid/nextSegmentIdSimple?token={1}&bizType=";
+    private static String serverUrl = "http://{0}/tinyid/id/nextSegmentIdSimple?token={1}&bizType=";
 
     private IdGeneratorFactoryClient() {
 
