@@ -32,20 +32,20 @@ java -jar output/tinyid-server-xxx.jar
 ## REST API 
 ```properties
 nextId:
-curl 'http://localhost:9999/tinyid/nextId?bizType=test&token=0f673adf80504e2eaa552f5d791b644c'
+curl 'http://localhost:9999/tinyid/id/nextId?bizType=test&token=0f673adf80504e2eaa552f5d791b644c'
 response:{"data":[2],"code":200,"message":""}
 
 nextId Simple:
-curl 'http://localhost:9999/tinyid/nextIdSimple?bizType=test&token=0f673adf80504e2eaa552f5d791b644c'
+curl 'http://localhost:9999/tinyid/id/nextIdSimple?bizType=test&token=0f673adf80504e2eaa552f5d791b644c'
 response: 3
 
 with batchSize:
-curl 'http://localhost:9999/tinyid/nextIdSimple?bizType=test&token=0f673adf80504e2eaa552f5d791b644c&batchSize=10'
+curl 'http://localhost:9999/tinyid/id/nextIdSimple?bizType=test&token=0f673adf80504e2eaa552f5d791b644c&batchSize=10'
 response: 4,5,6,7,8,9,10,11,12,13
 
 Get nextId like 1,3,5,7,9...
 bizType=test_odd : delta is 2 and remainder is 1
-curl 'http://localhost:9999/tinyid/nextIdSimple?bizType=test_odd&batchSize=10&token=0f673adf80504e2eaa552f5d791b644c'
+curl 'http://localhost:9999/tinyid/id/nextIdSimple?bizType=test_odd&batchSize=10&token=0f673adf80504e2eaa552f5d791b644c'
 response: 3,5,7,9,11,13,15,17,19,21
 ```
 ## Java client  (Recommend)
