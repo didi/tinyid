@@ -15,7 +15,8 @@ cd tinyid/tinyid-server/ && create table with db.sql (mysql)
 
 ## Config db
 
-cd tinyid-server/src/main/resources/offline && vi application.properties
+cd tinyid-server/src/main/resources/offline  
+vi application.properties
 ```properties
 datasource.tinyid.names=primary
 
@@ -26,7 +27,8 @@ datasource.tinyid.primary.password=123456
 ```
 ## Start tinyid-server
 ```xml
-cd tinyid-server/ && sh build.sh offline
+cd tinyid-server/
+sh build.sh offline
 java -jar output/tinyid-server-xxx.jar
 ```
 ## REST API 
