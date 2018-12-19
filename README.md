@@ -50,7 +50,7 @@ bizType=test_odd : delta is 2 and remainder is 1
 curl 'http://localhost:9999/tinyid/id/nextIdSimple?bizType=test_odd&batchSize=10&token=0f673adf80504e2eaa552f5d791b644c'
 response: 3,5,7,9,11,13,15,17,19,21
 ```
-## Java client  (Recommend)
+## Java client  (Recommended)
 
 ### Maven dependency
 ```xml
