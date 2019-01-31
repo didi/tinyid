@@ -16,7 +16,7 @@ fi
 
 echo "build $env begin"
 
-mvn clean package -P$env -Dmaven.test.skip=true
+mvn clean package -P$env -Dmaven.test.skip=true -f ../pom.xml
 ret=$?
 if [ $ret -ne 0 ];then
     echo "===== maven build failure ====="

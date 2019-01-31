@@ -1,7 +1,7 @@
 CREATE TABLE `tiny_id_info` (
   `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键',
   `biz_type` varchar(63) NOT NULL DEFAULT '' COMMENT '业务类型，唯一',
-  `begin_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '开始id，仅记录初始值，初始化时begin_id和max_id应相同',
+  `begin_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '开始id，仅记录初始值，无其他含义。初始化时begin_id和max_id应相同',
   `max_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '当前最大id',
   `step` int(11) DEFAULT '0' COMMENT '步长',
   `delta` int(11) NOT NULL DEFAULT '1' COMMENT '每次id增量',
@@ -11,7 +11,7 @@ CREATE TABLE `tiny_id_info` (
   `version` bigint(20) NOT NULL DEFAULT '0' COMMENT '版本号',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_biz_type` (`biz_type`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;INE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT 'id信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT 'id信息表';
 
 CREATE TABLE `tiny_id_token` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增id',
