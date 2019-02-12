@@ -55,14 +55,13 @@ public class IdContronller {
     }
 
     private Integer checkBatchSize(Integer batchSize) {
-        Integer newBatchSize = batchSize;
-        if (newBatchSize == null) {
-            newBatchSize = 1;
+        if (batchSize == null) {
+            batchSize = 1;
         }
-        if (newBatchSize > batchSizeMax) {
-            newBatchSize = batchSizeMax;
+        if (batchSize > batchSizeMax) {
+            batchSize = batchSizeMax;
         }
-        return newBatchSize;
+        return batchSize;
     }
 
     @RequestMapping("nextIdSimple")
