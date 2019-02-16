@@ -21,13 +21,14 @@ public abstract class AbstractIdGeneratorFactory implements IdGeneratorFactory {
                 return generators.get(bizType);
             }
             IdGenerator idGenerator = createIdGenerator(bizType);
-            generators.putIfAbsent(bizType, idGenerator);
-            return generators.get(bizType);
+            generators.put(bizType, idGenerator);
+            return idGenerator;
         }
     }
 
     /**
      * 根据bizType创建id生成器
+     *
      * @param bizType
      * @return
      */

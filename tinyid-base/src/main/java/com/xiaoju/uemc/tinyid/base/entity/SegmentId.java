@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author du_imba
- * nextId: (currentId, maxId]
+ *         nextId: (currentId, maxId]
  */
 public class SegmentId {
     private long maxId;
@@ -21,6 +21,12 @@ public class SegmentId {
 
     private volatile boolean isInit;
 
+    /**
+     * 这个方法主要为了1,4,7,10...这种序列准备的
+     * 设置好初始值之后，会以delta的方式递增，保证无论开始id是多少都能生成正确的序列
+     * 如当前是号段是(1000,2000]，delta=3, remainder=0，则经过这个方法后，currentId会先递增到1002,之后每次增加delta
+     * 因为currentId会先递增，所以会浪费一个id，所以做了一次减delta的操作，实际currentId会从999开始增，第一个id还是1002
+     */
     public void init() {
         if (isInit) {
             return;
@@ -37,6 +43,7 @@ public class SegmentId {
             for (int i = 0; i <= delta; i++) {
                 id = currentId.incrementAndGet();
                 if (id % delta == remainder) {
+                    // 避免浪费 减掉系统自己占用的一个id
                     currentId.addAndGet(0 - delta);
                     isInit = true;
                     return;

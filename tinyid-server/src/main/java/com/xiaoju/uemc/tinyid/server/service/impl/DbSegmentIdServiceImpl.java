@@ -24,14 +24,13 @@ public class DbSegmentIdServiceImpl implements SegmentIdService {
 
     @Autowired
     private TinyIdInfoDAO tinyIdInfoDAO;
-    private int retry = 3;
 
     @Override
     public SegmentId getNextSegmentId(String bizType) {
         // 获取nextTinyId的时候，有可能存在version冲突，需要重试
-        for (int i = 0; i < retry; i++) {
+        for (int i = 0; i < Constants.RETRY; i++) {
             TinyIdInfo tinyIdInfo = tinyIdInfoDAO.queryByBizType(bizType);
-            if(tinyIdInfo == null) {
+            if (tinyIdInfo == null) {
                 throw new TinyIdSysException("can not find biztype:" + bizType);
             }
             Long newMaxId = tinyIdInfo.getMaxId() + tinyIdInfo.getStep();
