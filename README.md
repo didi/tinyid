@@ -7,6 +7,8 @@ Support jdk version 1.7+
 
 # Getting started
 
+[中文wiki](https://github.com/didi/tinyid/wiki)
+
 ## Clone code
 git clone https://github.com/didi/tinyid.git
 
