@@ -14,12 +14,13 @@ public interface TinyIdInfoDAO {
     TinyIdInfo queryByBizType(String bizType);
 
     /**
-     * 根据id、oldMaxId、version更新最新的maxId
+     * 根据id、oldMaxId、version、bizType更新最新的maxId
      * @param id
      * @param newMaxId
      * @param oldMaxId
      * @param version
+     * @param bizType
      * @return
      */
-    int updateMaxId(Long id, Long newMaxId, Long oldMaxId, Long version);
+    int updateMaxId(Long id, Long newMaxId, Long oldMaxId, Long version, String bizType);
 }

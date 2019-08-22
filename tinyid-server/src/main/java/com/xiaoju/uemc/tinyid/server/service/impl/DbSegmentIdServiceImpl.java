@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -25,7 +26,14 @@ public class DbSegmentIdServiceImpl implements SegmentIdService {
     @Autowired
     private TinyIdInfoDAO tinyIdInfoDAO;
 
+    /**
+     * Transactional标记保证query和update使用的是同一连接
+     *
+     * @param bizType
+     * @return
+     */
     @Override
+    @Transactional
     public SegmentId getNextSegmentId(String bizType) {
         // 获取nextTinyId的时候，有可能存在version冲突，需要重试
         for (int i = 0; i < Constants.RETRY; i++) {
@@ -35,7 +43,8 @@ public class DbSegmentIdServiceImpl implements SegmentIdService {
             }
             Long newMaxId = tinyIdInfo.getMaxId() + tinyIdInfo.getStep();
             Long oldMaxId = tinyIdInfo.getMaxId();
-            int row = tinyIdInfoDAO.updateMaxId(tinyIdInfo.getId(), newMaxId, oldMaxId, tinyIdInfo.getVersion());
+            int row = tinyIdInfoDAO.updateMaxId(tinyIdInfo.getId(), newMaxId, oldMaxId, tinyIdInfo.getVersion(),
+                    tinyIdInfo.getBizType());
             if (row == 1) {
                 tinyIdInfo.setMaxId(newMaxId);
                 SegmentId segmentId = convert(tinyIdInfo);
