@@ -2,36 +2,32 @@
 
 <configuration status="error" shutdownHook="disable">
 
-    <Properties>
-        <Property name="log-path">./logs/</Property>
-    </Properties>
+    <properties>
+        <!--自定义一些常量，之后使用${变量名}引用-->
+        <property name="charset">UTF-8</property>
+    </properties>
     <!--先定义所有的appender-->
     <appenders>
         <!--这个输出控制台的配置-->
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%date{HH:mm:ss,SSS} [%thread] [%level] %logger{1.} - %msg%n"/>
+            <PatternLayout pattern="%date{HH:mm:ss,SSS} [%thread] [%level] %logger{1.} - %msg%n" charset="${charset}"/>
         </Console>
-        <RollingFile name="ServerRollingFile" fileName="${log-path}/tinyid-server.log"
-                     filePattern="${log-path}/tinyid-server.log.%d{yyyyMMddHH}">
-            <PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss,SSS} [%thread] [%level] %logger{1.} - %msg%n"/>
+        <RollingRandomAccessFile name="ServerRollingFile" fileName="/home/logs/tinyid-server/application.tinyid-server.${hostName}.log"
+                                 filePattern="/home/logs/tinyid-server/application.tinyid-server.${hostName}.%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss,SSS} [%thread] [%level] %logger{1.} - %msg%n" charset="${charset}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy/>
             </Policies>
-        </RollingFile>
+        </RollingRandomAccessFile>
     </appenders>
     <!--然后定义logger，只有定义了logger并引入的appender，appender才会生效-->
     <loggers>
         <logger name="com.xiaoju.uemc.tinyid" level="INFO"/>
         <logger name="org.springframework" level="INFO"/>
 
-        <!--<logger name="org.springframework.kafka" level="DEBUG" />-->
-        <!--
-        <logger name="org.mybatis" level="DEBUG" />
-        <logger name="java.sql" level="DEBUG"/>
-         -->
-
         <!--建立一个默认的root的logger, 除了上面定义的logger，其他只有warn才会打印-->
-        <root level="WARN">
+        <!--日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL -->
+        <root level="INFO">
             <appender-ref ref="ServerRollingFile"/>
             <appender-ref ref="Console"/>
         </root>

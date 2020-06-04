@@ -6,15 +6,14 @@
         <!--自定义一些常量，之后使用${变量名}引用-->
         <property name="charset">UTF-8</property>
     </properties>
-    <contextName>${HOSTNAME}</contextName>
     <!--先定义所有的appender-->
     <appenders>
         <!--这个输出控制台的配置-->
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%date{HH:mm:ss,SSS} [%thread] [%level] %logger{1.} - %msg%n"/>
         </Console>
-        <RollingRandomAccessFile name="ServerRollingFile" fileName="/home/logs/tinyid-server/application.${HOSTNAME}.%d{yyyy-MM-dd}.log"
-                     filePattern="/home/logs/tinyid-server/application.${HOSTNAME}.%d{yyyy-MM-dd}.log">
+        <RollingRandomAccessFile name="ServerRollingFile" fileName="/home/logs/tinyid-server/application.tinyid-server.${hostName}.log"
+                     filePattern="/home/logs/tinyid-server/application.tinyid-server.${hostName}.%d{yyyy-MM-dd}.log">
             <PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss,SSS} [%thread] [%level] %logger{1.} - %msg%n"/>
             <Policies>
                 <TimeBasedTriggeringPolicy/>
@@ -28,7 +27,7 @@
 
         <!--建立一个默认的root的logger, 除了上面定义的logger，其他只有warn才会打印-->
         <!--日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL -->
-        <root level="WARN">
+        <root level="INFO">
             <appender-ref ref="ServerRollingFile"/>
             <appender-ref ref="Console"/>
         </root>
