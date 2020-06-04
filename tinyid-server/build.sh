@@ -24,7 +24,4 @@ if [ $ret -ne 0 ];then
 else
     echo -n "===== maven build successfully! ====="
 fi
-rm -rf output
-mkdir output
-mv target/${module}-*.jar output
-cd output
+
