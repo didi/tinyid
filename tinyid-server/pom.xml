@@ -73,6 +73,12 @@
 
     <profiles>
         <profile>
+            <id>dohko</id>
+            <properties>
+                <package.environment>dohko</package.environment>
+            </properties>
+        </profile>
+        <profile>
             <id>online</id>
             <properties>
                 <package.environment>online</package.environment>
