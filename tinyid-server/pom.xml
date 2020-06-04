@@ -109,6 +109,9 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <outputDirectory>../target/</outputDirectory>
+                </configuration>
             </plugin>
         </plugins>
         <resources>
