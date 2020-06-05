@@ -10,7 +10,7 @@ import java.util.List;
  * @author du_imba
  */
 public class TinyId {
-    private static IdGeneratorFactoryClient client = IdGeneratorFactoryClient.getInstance(null);
+    private static IdGeneratorFactoryClient client = new IdGeneratorFactoryClient();
 
     private TinyId() {
 

@@ -1,73 +1,62 @@
 package com.xiaoju.uemc.tinyid.client.config;
 
+import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.util.StringUtils;
+
+import java.text.MessageFormat;
 import java.util.List;
 
 /**
  * @author du_imba
  */
+@Data
+@Configuration
+@EnableConfigurationProperties(TinyIdClientConfigProperties.class)
 public class TinyIdClientConfig {
 
-    private String tinyIdToken;
     private String tinyIdServer;
-    private List<String> serverList;
-    private Integer readTimeout;
-    private Integer connectTimeout;
+    private int readTimeout;
+    private int connectTimeout;
 
-    private volatile static TinyIdClientConfig tinyIdClientConfig;
+    private static final int DEFAULT_TIME_OUT = 5000;
+    private static String serverUrl = "http://{0}/tinyid/id/nextSegmentIdSimple?token={1}&bizType=";
 
-    private TinyIdClientConfig() {
+    @Autowired
+    private TinyIdClientConfigProperties properties;
+
+    public TinyIdClientConfig() {
+
     }
 
-    public static TinyIdClientConfig getInstance() {
-        if (tinyIdClientConfig != null) {
-            return tinyIdClientConfig;
-        }
-        synchronized (TinyIdClientConfig.class) {
-            if (tinyIdClientConfig != null) {
-                return tinyIdClientConfig;
-            }
-            tinyIdClientConfig = new TinyIdClientConfig();
-        }
-        return tinyIdClientConfig;
-    }
-
-    public String getTinyIdToken() {
-        return tinyIdToken;
-    }
-
-    public void setTinyIdToken(String tinyIdToken) {
-        this.tinyIdToken = tinyIdToken;
-    }
-
-    public String getTinyIdServer() {
-        return tinyIdServer;
-    }
-
-    public void setTinyIdServer(String tinyIdServer) {
+    public TinyIdClientConfig(String tinyIdServer, int readTimeout, int connectTimeout) {
         this.tinyIdServer = tinyIdServer;
-    }
-
-    public List<String> getServerList() {
-        return serverList;
-    }
-
-    public void setServerList(List<String> serverList) {
-        this.serverList = serverList;
-    }
-
-    public Integer getReadTimeout() {
-        return readTimeout;
-    }
-
-    public void setReadTimeout(Integer readTimeout) {
         this.readTimeout = readTimeout;
-    }
-
-    public Integer getConnectTimeout() {
-        return connectTimeout;
-    }
-
-    public void setConnectTimeout(Integer connectTimeout) {
         this.connectTimeout = connectTimeout;
     }
+
+    @Bean
+    public TinyIdClientConfig initTinyIdClientConfig() {
+        if (StringUtils.isEmpty(properties.getToken())) {
+            throw new IllegalArgumentException("cannot find tinyid.token config in application");
+        }
+        if (StringUtils.isEmpty(properties.getServer())) {
+            throw new IllegalArgumentException("cannot find tinyid.server config in application");
+        }
+        if (properties.getReadTimeout() <= 0) {
+            properties.setReadTimeout(DEFAULT_TIME_OUT);
+        }
+        if (properties.getConnectTimeout() <= 0) {
+            properties.setConnectTimeout(DEFAULT_TIME_OUT);
+        }
+
+        String server = MessageFormat.format(serverUrl, properties.getServer(), properties.getToken());
+
+        TinyIdClientConfig clientConfig = new TinyIdClientConfig(server, properties.getReadTimeout(), properties.getConnectTimeout());
+        return clientConfig;
+    }
+
 }

@@ -3,7 +3,12 @@ package com.xiaoju.uemc.tinyid.client.service.impl;
 import com.xiaoju.uemc.tinyid.base.entity.SegmentId;
 import com.xiaoju.uemc.tinyid.base.service.SegmentIdService;
 import com.xiaoju.uemc.tinyid.client.config.TinyIdClientConfig;
+import com.xiaoju.uemc.tinyid.client.config.TinyIdClientConfigProperties;
 import com.xiaoju.uemc.tinyid.client.utils.TinyIdHttpUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Random;
@@ -13,15 +18,19 @@ import java.util.logging.Logger;
 /**
  * @author du_imba
  */
+@Component
+@EnableConfigurationProperties(TinyIdClientConfigProperties.class)
 public class HttpSegmentIdServiceImpl implements SegmentIdService {
+    @Autowired
+    private TinyIdClientConfig clientConfig;
+
 
     private static final Logger logger = Logger.getLogger(HttpSegmentIdServiceImpl.class.getName());
 
     @Override
     public SegmentId getNextSegmentId(String bizType) {
-        String url = chooseService(bizType);
-        String response = TinyIdHttpUtils.post(url, TinyIdClientConfig.getInstance().getReadTimeout(),
-                TinyIdClientConfig.getInstance().getConnectTimeout());
+
+        String response = TinyIdHttpUtils.post(clientConfig.getTinyIdServer(), clientConfig.getReadTimeout(), clientConfig.getConnectTimeout());
         logger.info("tinyId client getNextSegmentId end, response:" + response);
         if (response == null || "".equals(response.trim())) {
             return null;
@@ -35,19 +44,5 @@ public class HttpSegmentIdServiceImpl implements SegmentIdService {
         segmentId.setRemainder(Integer.parseInt(arr[4]));
         return segmentId;
     }
-
-    private String chooseService(String bizType) {
-        List<String> serverList = TinyIdClientConfig.getInstance().getServerList();
-        String url = "";
-        if (serverList != null && serverList.size() == 1) {
-            url = serverList.get(0);
-        } else if (serverList != null && serverList.size() > 1) {
-            Random r = new Random();
-            url = serverList.get(r.nextInt(serverList.size()));
-        }
-        url += bizType;
-        return url;
-    }
-
 
 }
