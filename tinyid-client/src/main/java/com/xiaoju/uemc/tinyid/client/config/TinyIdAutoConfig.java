@@ -25,14 +25,6 @@ public class TinyIdAutoConfig {
 
     @Bean
     public TinyIdClientConfig config() {
-
-        if (StringUtils.isEmpty(properties.getToken())) {
-            throw new IllegalArgumentException("cannot find tinyid.token config in application");
-        }
-        if (StringUtils.isEmpty(properties.getServer())) {
-            throw new IllegalArgumentException("cannot find tinyid.server config in application");
-        }
-
         String cacheServer = MessageFormat.format(cacheServerUrl, properties.getServer());
         String noCacheServer = MessageFormat.format(noCacheServerUrl, properties.getServer());
         return new TinyIdClientConfig(cacheServer, noCacheServer, properties.getToken(), properties.isLocalCache());
