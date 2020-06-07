@@ -20,8 +20,8 @@ public class TinyIdAutoConfig {
     @Autowired
     private TinyIdClientConfigProperties properties;
     private static final int MIN_TIME_OUT = 1 * 1000;
-    private static final String cacheServerUrl = "http://{0}/tinyid/id/nextSegmentIdSimple";
-    private static final String noCacheServerUrl = "http://{0}/tinyid/id/nextIdSimple";
+    private static final String cacheServerUrl = "/tinyid/id/nextSegmentIdSimple";
+    private static final String noCacheServerUrl = "{0}/tinyid/id/nextIdSimple";
 
     @Bean
     public TinyIdClientConfig config() {
