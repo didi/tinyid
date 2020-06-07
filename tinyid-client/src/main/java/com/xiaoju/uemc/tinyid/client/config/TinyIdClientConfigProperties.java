@@ -21,7 +21,7 @@ public class TinyIdClientConfigProperties {
      */
     private String token;
 
-    private int readTimeout = 10;
+    private int readTimeout = 5000;
 
-    private int connectTimeout = 10;
+    private int connectTimeout = 5000;
 }
