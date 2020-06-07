@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.xiaoju.uemc.tinyid.client.config.TinyIdAutoConfig,\
+  com.xiaoju.uemc.tinyid.client.factory.impl.IdGeneratorFactoryClient,\
+  com.xiaoju.uemc.tinyid.client.service.impl.HttpSegmentIdServiceImpl,\
+  com.xiaoju.uemc.tinyid.client.handler.IDGeneratorService

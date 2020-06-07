@@ -1,73 +1,33 @@
 package com.xiaoju.uemc.tinyid.client.config;
 
+import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.util.MultiValueMap;
+import org.springframework.util.StringUtils;
+import org.springframework.web.client.RestTemplate;
+
+import java.text.MessageFormat;
 import java.util.List;
 
 /**
  * @author du_imba
  */
+@Data
 public class TinyIdClientConfig {
+    private String cacheServerUrl;
+    private String noCacheServerUrl;
+    private String token;
+    private boolean localCache;
 
-    private String tinyIdToken;
-    private String tinyIdServer;
-    private List<String> serverList;
-    private Integer readTimeout;
-    private Integer connectTimeout;
-
-    private volatile static TinyIdClientConfig tinyIdClientConfig;
-
-    private TinyIdClientConfig() {
-    }
-
-    public static TinyIdClientConfig getInstance() {
-        if (tinyIdClientConfig != null) {
-            return tinyIdClientConfig;
-        }
-        synchronized (TinyIdClientConfig.class) {
-            if (tinyIdClientConfig != null) {
-                return tinyIdClientConfig;
-            }
-            tinyIdClientConfig = new TinyIdClientConfig();
-        }
-        return tinyIdClientConfig;
-    }
-
-    public String getTinyIdToken() {
-        return tinyIdToken;
-    }
-
-    public void setTinyIdToken(String tinyIdToken) {
-        this.tinyIdToken = tinyIdToken;
-    }
-
-    public String getTinyIdServer() {
-        return tinyIdServer;
-    }
-
-    public void setTinyIdServer(String tinyIdServer) {
-        this.tinyIdServer = tinyIdServer;
-    }
-
-    public List<String> getServerList() {
-        return serverList;
-    }
-
-    public void setServerList(List<String> serverList) {
-        this.serverList = serverList;
-    }
-
-    public Integer getReadTimeout() {
-        return readTimeout;
-    }
-
-    public void setReadTimeout(Integer readTimeout) {
-        this.readTimeout = readTimeout;
-    }
-
-    public Integer getConnectTimeout() {
-        return connectTimeout;
-    }
-
-    public void setConnectTimeout(Integer connectTimeout) {
-        this.connectTimeout = connectTimeout;
+    public TinyIdClientConfig(String cacheServerUrl, String noCacheServerUrl, String token, boolean localCache) {
+        this.cacheServerUrl = cacheServerUrl;
+        this.noCacheServerUrl = noCacheServerUrl;
+        this.token = token;
+        this.localCache = localCache;
     }
 }
