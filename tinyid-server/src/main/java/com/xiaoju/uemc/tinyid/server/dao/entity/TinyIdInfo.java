@@ -10,8 +10,6 @@ public class TinyIdInfo {
 
     private String bizType;
 
-    private Long beginId;
-
     private Long maxId;
 
     private Integer step;
@@ -19,8 +17,6 @@ public class TinyIdInfo {
     private Integer delta;
 
     private Integer remainder;
-
-    private Date createTime;
 
     private Date updateTime;
 
@@ -40,14 +36,6 @@ public class TinyIdInfo {
 
     public void setBizType(String bizType) {
         this.bizType = bizType;
-    }
-
-    public Long getBeginId() {
-        return beginId;
-    }
-
-    public void setBeginId(Long beginId) {
-        this.beginId = beginId;
     }
 
     public Long getMaxId() {
@@ -80,14 +68,6 @@ public class TinyIdInfo {
 
     public void setRemainder(Integer remainder) {
         this.remainder = remainder;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
     }
 
     public Date getUpdateTime() {

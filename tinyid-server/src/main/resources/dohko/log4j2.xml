@@ -10,11 +10,11 @@
     <appenders>
         <!--这个输出控制台的配置-->
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%date{HH:mm:ss,SSS} [%thread] [%level] %logger{1.} - %msg%n" charset="${charset}"/>
+            <PatternLayout pattern="%date{HH:mm:ss,SSS} [%thread] [%level] %logger{1.} - %msg%n"/>
         </Console>
         <RollingRandomAccessFile name="ServerRollingFile" fileName="/home/logs/tinyid-server/application.tinyid-server.${hostName}.log"
-                                 filePattern="/home/logs/tinyid-server/application.tinyid-server.${hostName}.%d{yyyy-MM-dd}.log">
-            <PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss,SSS} [%thread] [%level] %logger{1.} - %msg%n" charset="${charset}"/>
+                     filePattern="/home/logs/tinyid-server/application.tinyid-server.${hostName}.%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss,SSS} [%thread] [%level] %logger{1.} - %msg%n"/>
             <Policies>
                 <TimeBasedTriggeringPolicy/>
             </Policies>
