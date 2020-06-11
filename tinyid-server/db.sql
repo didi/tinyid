@@ -1,5 +1,5 @@
 CREATE TABLE `tiny_id_info` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '自增主键',
   `biz_type` varchar(63) NOT NULL DEFAULT '' COMMENT '业务类型，唯一',
   `begin_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '开始id，仅记录初始值，无其他含义。初始化时begin_id和max_id应相同',
   `max_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '当前最大id',
