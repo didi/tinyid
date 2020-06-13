@@ -62,12 +62,14 @@ public class CachedIdGenerator implements IdGenerator {
                 if (next == null && !isLoadingNext) {
                     isLoadingNext = true;
                     executorService.submit(new Runnable() {
-
                         @Override
                         public void run() {
-                            SegmentId segmentId = querySegmentId();
-                            next = segmentId;
-                            isLoadingNext = false;
+                            try {
+                                // 无论获取下个segmentId成功与否，都要将isLoadingNext赋值为false
+                                next = querySegmentId();
+                            } finally {
+                                isLoadingNext = false;
+                            }
                         }
                     });
                 }
