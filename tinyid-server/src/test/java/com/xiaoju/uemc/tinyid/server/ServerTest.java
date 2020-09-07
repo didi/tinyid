@@ -2,6 +2,7 @@ package com.xiaoju.uemc.tinyid.server;
 
 import com.xiaoju.uemc.tinyid.base.generator.IdGenerator;
 import com.xiaoju.uemc.tinyid.server.factory.impl.IdGeneratorFactoryServer;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Ignore
 public class ServerTest {
 
     @Autowired
