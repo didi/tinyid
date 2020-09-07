@@ -1,0 +1,61 @@
+# This workflow will build a Java project with Maven
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: Release TinyId
+
+on:
+  push:
+    tags:
+      - releases/[0-9]+.[0-9]+.[0-9]+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+      - uses: olegtarasov/get-tag@v2
+        id: tagName
+        with:
+          tagRegex: "releases/(.*)"  # Optional. Returns specified group text as tag name. Full tag string is returned if regex is not defined.
+          tagRegexGroup: 1 # Optional. Default is 1.
+      - name: Set version
+        run: |
+          mvn versions:set -DnewVersion=${{ steps.tagName.outputs.tag }}
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ steps.tagName.outputs.tag }}
+          body: |
+            Changes in this Release
+            - test release
+          draft: false
+          prerelease: false
+      - name: Upload TinyId client Release Asset
+        id: upload-release-client-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ./tinyid-client/target/tinyid-client-${{ steps.tagName.outputs.tag }}.jar
+          asset_name: tinyid-client-${{ steps.tagName.outputs.tag }}.jar
+          asset_content_type: application/zip
+      - name: Upload TinyId server Release Asset
+        id: upload-release-server-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ./tinyid-server/target/tinyid-server-${{ steps.tagName.outputs.tag }}.jar
+          asset_name: tinyid-server-${{ steps.tagName.outputs.tag }}.jar
+          asset_content_type: application/zip
