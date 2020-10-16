@@ -13,6 +13,7 @@
 
     <properties>
         <spring.version>1.5.9.RELEASE</spring.version>
+        <curator.version>2.6.0</curator.version>
     </properties>
 
     <dependencies>
@@ -68,6 +69,11 @@
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
             <version>1.9.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-recipes</artifactId>
+            <version>${curator.version}</version>
         </dependency>
     </dependencies>
 
