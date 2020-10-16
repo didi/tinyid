@@ -3,10 +3,9 @@ package com.xiaoju.uemc.tinyid.base.generator.impl;
 import com.xiaoju.uemc.tinyid.base.exception.SystemClockCallbackException;
 import com.xiaoju.uemc.tinyid.base.generator.IdGenerator;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
@@ -44,12 +43,12 @@ public class SnowflakeIdGenerator implements IdGenerator {
 
     @Override
     public Long nextId() {
-        return null;
+        return doNextId();
     }
 
     @Override
     public List<Long> nextId(Integer batchSize) {
-        return null;
+        return doNextIds(batchSize);
     }
 
 
@@ -83,7 +82,7 @@ public class SnowflakeIdGenerator implements IdGenerator {
         return toId(lastTimestamp, workId, sequence);
     }
 
-    private synchronized Set<Long> doNextIds(int batchSize) {
+    private synchronized List<Long> doNextIds(int batchSize) {
         if ((batchSize & sequenceMask) == 0) {
             throw new IllegalArgumentException("batch size " + batchSize);
         }
@@ -99,7 +98,7 @@ public class SnowflakeIdGenerator implements IdGenerator {
                 throw new SystemClockCallbackException("system clock callback slow " + offset, e);
             }
         }
-        Set<Long> nextIds = new HashSet<>(batchSize);
+        List<Long> nextIds = new ArrayList<>(batchSize);
         while (nextIds.size() < batchSize) {
             // 在本毫秒
             if (now == lastTimestamp) {
