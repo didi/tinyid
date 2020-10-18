@@ -49,7 +49,6 @@ public class IdGeneratorFactoryClient extends AbstractIdGeneratorFactory {
     }
 
     private static void init(String location) {
-        idGeneratorFactoryClient = new IdGeneratorFactoryClient();
         Properties properties = PropertiesLoader.loadProperties(location);
         String tinyIdToken = properties.getProperty("tinyid.token");
         String tinyIdServer = properties.getProperty("tinyid.server");
@@ -75,6 +74,7 @@ public class IdGeneratorFactoryClient extends AbstractIdGeneratorFactory {
         }
         logger.info("init tinyId client success url info:" + serverList);
         tinyIdClientConfig.setServerList(serverList);
+        idGeneratorFactoryClient = new IdGeneratorFactoryClient();
     }
 
     @Override
