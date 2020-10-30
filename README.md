@@ -2,8 +2,8 @@
 [![license](http://img.shields.io/badge/license-Apache2.0-brightgreen.svg?style=flat)](https://github.com/didi/tinyid/blob/master/LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/didi/tinyid/pulls)
 
-Tinyid is a ID Generator Service. It provides a REST API and a java client for getting ids. Over 10 million QPS per single instance when using the java client.
-Support jdk version 1.7+
+Tinyid is an ID Generator Service. It provides a REST API and a java client for getting ids. Over 10 million QPS per single instance when using the java client.
+Support JDK version 1.7+
 
 # Getting started
 
