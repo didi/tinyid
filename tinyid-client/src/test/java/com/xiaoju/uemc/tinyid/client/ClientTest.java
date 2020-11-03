@@ -1,12 +1,14 @@
 package com.xiaoju.uemc.tinyid.client;
 
 import com.xiaoju.uemc.tinyid.client.utils.TinyId;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  * @Author du_imba
  */
 
+@Ignore
 public class ClientTest {
 
     @Test
