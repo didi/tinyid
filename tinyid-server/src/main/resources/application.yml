@@ -1,0 +1,14 @@
+server:
+    port: 9999
+    context-path: /tinyid
+
+spring:
+    profiles:
+        active: test
+
+
+
+
+
+
+

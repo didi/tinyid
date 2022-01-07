@@ -71,23 +71,6 @@
         </dependency>
     </dependencies>
 
-    <profiles>
-        <profile>
-            <id>online</id>
-            <properties>
-                <package.environment>online</package.environment>
-            </properties>
-        </profile>
-        <profile>
-            <id>offline</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <package.environment>offline</package.environment>
-            </properties>
-        </profile>
-    </profiles>
 
     <build>
         <plugins>

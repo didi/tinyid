@@ -1,0 +1,26 @@
+batch:
+    size:
+        max: 100000
+
+datasource:
+    tinyid:
+#        names: primary
+        names: primary,secondary
+        primary:
+            driver-class-name: com.mysql.cj.jdbc.Driver
+            url: jdbc:mysql://localhost:3306/test?u-seUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=UTC&useSSL=false
+            username: root
+            password: root
+            testOnBorrow: false
+            maxActive: 10
+        secondary:
+            driver-class-name: com.mysql.cj.jdbc.Driver
+            url: jdbc:mysql://localhost:3306/statistic?u-seUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=UTC&useSSL=false
+            username: root
+            password: root
+            testOnBorrow: false
+            maxActive: 10
+
+
+
+

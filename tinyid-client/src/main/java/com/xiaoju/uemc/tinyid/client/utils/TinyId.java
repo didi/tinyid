@@ -1,7 +1,8 @@
 package com.xiaoju.uemc.tinyid.client.utils;
 
-import com.xiaoju.uemc.tinyid.client.factory.impl.IdGeneratorFactoryClient;
 import com.xiaoju.uemc.tinyid.base.generator.IdGenerator;
+import com.xiaoju.uemc.tinyid.client.config.TinyIdClientConfig;
+import com.xiaoju.uemc.tinyid.client.factory.impl.IdGeneratorFactoryClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,10 +11,20 @@ import java.util.List;
  * @author du_imba
  */
 public class TinyId {
-    private static IdGeneratorFactoryClient client = IdGeneratorFactoryClient.getInstance(null);
+    private static IdGeneratorFactoryClient client;
 
     private TinyId() {
 
+    }
+
+    public static void init(TinyIdClientConfig config) {
+        if (client == null) {
+            synchronized (IdGeneratorFactoryClient.class) {
+                if (client == null) {
+                    client = IdGeneratorFactoryClient.getInstance(config);
+                }
+            }
+        }
     }
 
     public static Long nextId(String bizType) {
